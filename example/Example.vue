@@ -1,14 +1,14 @@
 <template>
   <div class="wrapper">
-    <input type="radio" v-model="locale" value="en">EN
-    <input type="radio" v-model="locale" value="de">DE
     <h5p
-      src="/h5p/"
+      src="/video/"
+      content="/video/test"
       @xapi="log"
       :l10n="translations[locale]"
       icon
       copyright
-      :key="locale">
+      :key="locale"
+      ref="foo">
       Loading...
       <template v-slot:404="{ response }">
         {{ response.url + ' ' + response.statusText }}
@@ -50,6 +50,7 @@ export default {
   methods: {
     log (ev) {
       console.log('catched: ', ev)
+      console.log(this.$refs.foo.path);
     }
   }
 }

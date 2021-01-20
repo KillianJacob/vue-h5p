@@ -30,6 +30,10 @@ export default {
       type: String,
       required: true
     },
+    content: {
+      type: String,
+      required: true
+    },
     embed: {
       type: String,
       default: ''
@@ -76,8 +80,8 @@ export default {
     let content
     let libraries
     try {
-      h5p = await this.getJSON('h5p.json')
-      content = await this.getJSON('content', 'content.json')
+      h5p = await this.getJSON(this.path , 'h5p.json')
+      content = await this.getJSON(this.content, 'content.json')
       libraries = await this.loadDependencies(h5p.preloadedDependencies)
     } catch (e) {
       this.error = e
@@ -146,7 +150,7 @@ export default {
       })
     },
     async getJSON (...url) {
-      const resp = await fetch(this.path + '/' + url.join('/'), { credentials: 'include' })
+      const resp = await fetch(url.join('/'), { credentials: 'include' })
       if (!resp.ok) {
         let body = {}
         try {
@@ -162,12 +166,12 @@ export default {
         if (libraryMap[id]) return
         try {
           libraryMap[id] = {
-            library: await this.getJSON(id, 'library.json'),
+            library: await this.getJSON(this.path , id, 'library.json'),
             path: id
           }
         } catch {
           libraryMap[id] = {
-            library: await this.getJSON(machineName, 'library.json'),
+            library: await this.getJSON(this.path, machineName, 'library.json'),
             path: machineName
           }
         }

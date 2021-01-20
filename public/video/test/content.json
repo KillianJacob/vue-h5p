@@ -1,0 +1,55 @@
+{
+    "interactiveVideo": {
+        "video": {
+            "files": [
+                {
+                    "path": "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",
+                    "mime": "video/mp4",
+                    "copyright": {
+                        "license": "CC BY-SA",
+                        "title": "-&gt; Berries",
+                        "author": "Fred Rune Rahm",
+                        "source": "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"
+                    },
+                    "quality": {
+                        "level": 0,
+                        "label": "Default"
+                    }
+                }
+            ],
+            "startScreenOptions": {}
+        },
+        "assets": {
+            "interactions": [
+
+                {  
+                    "action": {
+                    "library": "H5P.Image 1.1",
+                    "params": {
+                      "contentName": "Image",
+                      "file": {
+                        "path": "https://www.icone-png.com/png/10/10469.png",
+                        "mime": "image\/png",
+                        "width": 1000,
+                        "height": 600
+                      }
+                    }
+                  },
+                  "x": 0,
+                  "y": 0,
+                  "duration": {
+                    "from": 3, 
+                    "to": 3
+                  },
+                  "pause": false,
+                  "label": "<p>Logo<\/p>\n",
+                  "displayType": "",
+                  "buttonOnMobile": true
+                }
+
+            ]
+        },
+        "summary": {},
+        "l10n": {}
+    }
+}
