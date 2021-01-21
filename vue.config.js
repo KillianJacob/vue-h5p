@@ -24,6 +24,9 @@ module.exports = {
       output: {
         libraryExport: 'default'
       },
+      resolve: {
+        symlinks: true, 
+      },
       externals: process.env.VUE_CLI_BUILD_TARGET === 'lib' ? [nodeExternals()] : []
     }
   }

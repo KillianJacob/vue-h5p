@@ -45,8 +45,27 @@
                   "label": "<p>Logo<\/p>\n",
                   "displayType": "button",
                   "buttonOnMobile": true
+                },
+                {  
+                    "action": {
+                    "library": "H5P.Nil 1.0",
+                    "params": [],
+                    "metadata": {
+                      "contentType": "Label",
+                      "license": "U"
+                    }
+                  },
+                  "x": 50,
+                  "y": 0,
+                  "duration": {
+                    "from": 5, 
+                    "to": 10
+                  },
+                  "pause": false,
+                  "label": "<p>Logo<\/p>\n",
+                  "displayType": "",
+                  "buttonOnMobile": true
                 }
-
             ]
         },
         "summary": {},

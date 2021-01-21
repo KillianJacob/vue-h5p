@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import Toposort from 'toposort-class'
 import { FetchError } from '@/errors'
 import l10n from '@/l10n'
@@ -34,6 +35,14 @@ export default {
       type: String,
       required: true
     },
+    loadedDepJS: {
+      type: Array,
+      default: () => []
+    },
+    loadedDepCSS: {
+      type: Array,
+      default: () => []
+    },    
     embed: {
       type: String,
       default: ''
@@ -82,7 +91,10 @@ export default {
     try {
       h5p = await this.getJSON(this.path , 'h5p.json')
       content = await this.getJSON(this.content, 'content.json')
+      if(this.loadedDepJS.length < 1){
       libraries = await this.loadDependencies(h5p.preloadedDependencies)
+      console.log("no preloaded dep")
+      }
     } catch (e) {
       this.error = e
       this.loading = false
@@ -113,19 +125,36 @@ export default {
           }
         }
       },
-      _libraryPaths: Object.fromEntries(
-        Object.entries(libraries).map(
-          ([id, lib]) => [id, lib.path]
-        )
-      )
+      // _libraryPaths: Object.fromEntries(
+      //   Object.entries(libraries).map(
+      //     ([id, lib]) => [id, lib.path]
+      //   )
+      // )
     }
+    var styles = []
+    var scripts = []
+    var listDepJSBase64
+    var listDepCSSBase64
+    if(this.loadedDepJS.length < 1){
+      const sortedDep = this.sortDependencies(libraries)
+      styles = sortedDep.styles
+      scripts = sortedDep.scripts
+      listDepJSBase64 = await this.getSourceFileJS(scripts)
+      listDepCSSBase64 = await this.getSourceFileCSS(styles)
+    }
+    else{
 
-    const { styles, scripts } = this.sortDependencies(libraries)
+     listDepJSBase64 = this.loadedDepJS
+     listDepCSSBase64 = this.loadedDepCSS
+
+    }
+    this.$emit('loadDependenciesJS', await listDepJSBase64)
+    this.$emit('loadDependenciesCSS', await listDepCSSBase64)
 
     // workaround for vue-loader parsing this as the end of our SFC's script block
     const endScript = '</' + 'script>'
-    const contentStyles = styles.map(style => `<link rel="stylesheet" href="${style}">`).join('\n')
-    const contentScripts = scripts.map(script => `<script src="${script}">${endScript}`).join('\n')
+    const contentStyles = listDepCSSBase64.map(style => `<link rel="stylesheet" href="${style}">`).join('\n')
+    const contentScripts = listDepJSBase64.map(dep => `<script src="${dep}">${endScript}`).join('\n')
     this.srcdoc = `<!doctype html>
 <html class="h5p-iframe">
   <head>
@@ -200,7 +229,35 @@ export default {
         .filter(Boolean)
 
       return { styles, scripts }
-    }
+    },
+    getSourceFileJS(listPathSourceFile){
+
+      return Promise.all(listPathSourceFile.map(async file =>  {
+
+      let res = await axios.get(file)
+      .then((response) => {
+        return response.data;
+      });   
+
+      return "data:application/javascript;charset=utf-8;base64," + btoa(res);
+
+      }))
+
+    },
+    getSourceFileCSS(listPathSourceFile){
+
+      return Promise.all(listPathSourceFile.map(async file =>  {
+
+      let res = await axios.get(file)
+      .then((response) => {
+        return response.data;
+      });   
+
+      return "data:text/css;charset=utf-8;base64," + btoa(res);
+
+      }))
+
+    }    
   }
 }
 </script>

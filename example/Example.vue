@@ -1,19 +1,35 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" style="width:30%">
     <h5p
       src="/video/"
-      content="/video/test"
+      content="/video/content"
+      :loadedDepJS="libraryJSBase64Map"
+      :loadedDepCSS="libraryCSSBase64Map"
+      @loadDependenciesJS="loadedDepJS"
+      @loadDependenciesCSS="loadedDepCSS"
       @xapi="log"
-      :l10n="translations[locale]"
-      icon
-      copyright
-      :key="locale"
-      ref="foo">
+      >
       Loading...
       <template v-slot:404="{ response }">
         {{ response.url + ' ' + response.statusText }}
       </template>
     </h5p>
+    <button v-on:click="isHidden = false">Load</button>
+     <h5p
+      v-if="!isHidden"
+      src="/video/"
+      content="/video/content"
+      :loadedDepJS="libraryJSBase64Map"
+      :loadedDepCSS="libraryCSSBase64Map"
+      @loadDependenciesJS="loadedDepJS"
+      @loadDependenciesCSS="loadedDepCSS"
+      @xapi="log"
+      >
+      Loading...
+      <template v-slot:404="{ response }">
+        {{ response.url + ' ' + response.statusText }}
+      </template>
+    </h5p>   
   </div>
 </template>
 
@@ -35,13 +51,16 @@ export default {
         icon: true,
         export: true
       },
+      isHidden: true,
       translations: {
         en: {},
         de: {
           reuse: 'Wiederverwenden',
           reuseContent: 'Content Wiederverwenden'
         }
-      }
+      },
+      libraryCSSBase64Map : [],
+      libraryJSBase64Map : []
     }
   },
   async mounted () {
@@ -50,8 +69,13 @@ export default {
   methods: {
     log (ev) {
       console.log('catched: ', ev)
-      console.log(this.$refs.foo.path);
-    }
+    },
+    loadedDepJS (libraryJSBase64Map) {
+      this.libraryJSBase64Map = libraryJSBase64Map
+    },
+    loadedDepCSS (libraryCSSBase64Map) {
+      this.libraryCSSBase64Map = libraryCSSBase64Map
+    }    
   }
 }
 </script>
