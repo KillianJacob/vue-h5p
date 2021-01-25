@@ -1,6 +1,6 @@
 {
   "name": "smartmoov-vue-h5p",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Vue.js Component for displaying h5p content, based on h5p-standalone",
   "bugs": {
     "url": "https://github.com/technowledgy/vue-h5p/issues"

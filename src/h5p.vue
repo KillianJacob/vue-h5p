@@ -42,7 +42,11 @@ export default {
     loadedDepCSS: {
       type: Array,
       default: () => []
-    },    
+    },  
+    injected_css: {
+      type: String,
+      default: ''
+    },       
     embed: {
       type: String,
       default: ''
@@ -148,6 +152,9 @@ export default {
      listDepCSSBase64 = this.loadedDepCSS
 
     }
+
+    listDepCSSBase64.push(this.injected_css);
+
     this.$emit('loadDependenciesJS', await listDepJSBase64)
     this.$emit('loadDependenciesCSS', await listDepCSSBase64)
 
