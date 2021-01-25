@@ -2,7 +2,7 @@
   <div class="wrapper" style="width:30%">
     <h5p
       src="/video/"
-      content="/video/content/content.json"
+      content="http://localhost:8001/drivingschool/video/1611074803886240e556e-b415-42ba-8cd6-06b35bbe5e9c.json"
       :loadedDepJS="libraryJSBase64Map"
       :loadedDepCSS="libraryCSSBase64Map"
       @loadDependenciesJS="loadedDepJS"

@@ -179,7 +179,7 @@ export default {
       })
     },
     async getJSON (...url) {
-      const resp = await fetch(url.join('/'))
+      const resp = await fetch(url.join('/'), { credentials: 'omit' })
       if (!resp.ok) {
         let body = {}
         try {
