@@ -2,7 +2,7 @@
   <div class="wrapper" style="width:30%">
     <h5p
       src="/video/"
-      content="/video/content"
+      content="/video/content/content.json"
       :loadedDepJS="libraryJSBase64Map"
       :loadedDepCSS="libraryCSSBase64Map"
       @loadDependenciesJS="loadedDepJS"
@@ -18,7 +18,7 @@
      <h5p
       v-if="!isHidden"
       src="/video/"
-      content="/video/content"
+      content="/video/content/content.json"
       :loadedDepJS="libraryJSBase64Map"
       :loadedDepCSS="libraryCSSBase64Map"
       @loadDependenciesJS="loadedDepJS"

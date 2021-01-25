@@ -90,7 +90,7 @@ export default {
     let libraries
     try {
       h5p = await this.getJSON(this.path , 'h5p.json')
-      content = await this.getJSON(this.content, 'content.json')
+      content = await this.getJSON(this.content)
       if(this.loadedDepJS.length < 1){
       libraries = await this.loadDependencies(h5p.preloadedDependencies)
       console.log("no preloaded dep")
@@ -179,7 +179,7 @@ export default {
       })
     },
     async getJSON (...url) {
-      const resp = await fetch(url.join('/'), { credentials: 'include' })
+      const resp = await fetch(url.join('/'))
       if (!resp.ok) {
         let body = {}
         try {
